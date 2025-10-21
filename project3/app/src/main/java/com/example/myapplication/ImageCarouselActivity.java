@@ -190,12 +190,18 @@ public class ImageCarouselActivity extends AppCompatActivity {
 
         @Override
         public void onStartTrackingTouch(SeekBar seekBar) {
-            //开始拖动时不需要特殊处理
+            //开始拖动时停止自动轮播
+            if(isAutoPlaying){
+                handler.removeCallbacks(runnable);
+            }
         }
 
         @Override
         public void onStopTrackingTouch(SeekBar seekBar) {
-            //停止拖动时不需要特殊处理
+            //停止拖动时恢复自动轮播
+            if(isAutoPlaying){
+                handler.postDelayed(runnable,1000);
+            }
         }
     });
 

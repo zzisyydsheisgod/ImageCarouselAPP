@@ -3,6 +3,7 @@ package com.example.myapplication;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -125,6 +126,19 @@ public class activity_login extends AppCompatActivity {
 
         //为ViewPager2设置适配器
         viewPager.setAdapter(adapter);
+
+
+        //设置页面切换器，改善平滑滚动效果
+        viewPager.setPageTransformer(new ViewPager2.PageTransformer(){
+
+            @Override
+            public void transformPage(View page,float position){
+                
+                //添加一些视差效果，让滚动更平滑
+                page.setTranslationX(-position * page.getWidth()*0.1f);
+            }
+
+        });
     }
 
 
