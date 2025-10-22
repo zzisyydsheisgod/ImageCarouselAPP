@@ -20,5 +20,21 @@ public class ListViewActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        //获取ListView
+        ListView listview = findViewById(R.id.listview);
+
+        //组织数据
+        String[] UserName_List = {
+
+        };
+
+
+        //初始化适配器
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+            this, android.R.layout.simple_list_item_1, UserName_List);
+    
+        //加载适配器
+        listview.setAdapter(adapter);   
     }
 }
