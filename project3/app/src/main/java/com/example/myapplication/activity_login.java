@@ -16,7 +16,8 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.widget.EditText;
-
+import android.widget.ArrayAdapter;            //添加新导入语句
+import android.widget.AutoCompleteTextView;    //添加新导入语句
 
 public class activity_login extends AppCompatActivity {
 
@@ -25,9 +26,14 @@ public class activity_login extends AppCompatActivity {
     private static final String CORRECT_PASSWORD = "123456";
 
     //声明EditText变量，用于引用布局文件中的用户名和密码输入框
-    private EditText etUsername;//用户名输入框
+    private AutoCompleteTextView etUsername;//用户名输入框,更改成AutoCompleteTextView变量
     private EditText etPassword;//密码输入框
 
+
+    //预定义的用户名数组，用于自动补全功能
+    private static final String[] USERNAMES = new String[]{
+        "admin","user1","user2","test","demo"
+    };
 
     //重写onCreate()方法,这是Activity生命周期的第一个方法，在Activity创建时调用
     @Override
@@ -58,6 +64,15 @@ public class activity_login extends AppCompatActivity {
         //获取用户名和密码输入框
         etUsername = findViewById(R.id.etUsername);
         etPassword = findViewById(R.id.etPassword); 
+
+
+        //创建ArrayAdapter,用于为AutoCompleteTextView提供自动补全数据
+        ArrayAdapter<String> Auto_list_adapter = new ArrayAdapter<>(
+                this, android.R.layout.simple_list_item_activated_1,USERNAMES);
+
+
+        //为用户名输入框设置适配器
+        etUsername.setAdapter(Auto_list_adapter);
 
         //通过findViewById()方法获取布局文件中的登录按钮，并赋值变量给BTN_OK
         Button BTN_OK = findViewById(R.id.login_ok);
@@ -122,10 +137,10 @@ public class activity_login extends AppCompatActivity {
         ViewPager2 viewPager = findViewById(R.id.viewPager);
 
         //创建ImagePagerAdapter适配器对象，用于为ViewPager2提供数据
-        ImagePagerAdapter adapter = new ImagePagerAdapter(this, images);
+        ImagePagerAdapter Image_adapter = new ImagePagerAdapter(this, images);
 
         //为ViewPager2设置适配器
-        viewPager.setAdapter(adapter);
+        viewPager.setAdapter(Image_adapter);
 
 
         //设置页面切换器，改善平滑滚动效果

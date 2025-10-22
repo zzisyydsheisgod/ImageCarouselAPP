@@ -12,26 +12,25 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
         tools:targetApi="31">
-
+        <activity
+            android:name=".ListViewActivity"
+            android:exported="false" />
         <!-- 启动 Activity：登录页 -->
         <activity
             android:name=".activity_login"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-        <!-- 主界面 -->
+        </activity> <!-- 主界面 -->
         <activity
             android:name=".MainActivity"
-            android:exported="true">
-        </activity>
-
-        <activity android:name=".ImageCarouselActivity"
-        android:exported="false" />
-
+            android:exported="true"></activity>
+        <activity
+            android:name=".ImageCarouselActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

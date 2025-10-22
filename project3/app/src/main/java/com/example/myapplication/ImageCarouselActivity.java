@@ -61,6 +61,12 @@ public class ImageCarouselActivity extends AppCompatActivity {
     //声明布尔型变量，用于标记是否正在进行轮播
     boolean isAutoPlaying = false;
 
+
+
+    //声明一个变量来跟踪是否正在手动拖动
+    private boolean isManualDragging = false;
+    private int previousProgress = 0;
+
     //创建Runnable对象，用于执行自动轮播任务
     private Runnable runnable = new Runnable() {
 
@@ -184,7 +190,14 @@ public class ImageCarouselActivity extends AppCompatActivity {
         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
             if (fromUser) {
                 //用户拖动时更新图片位置
-                viewPager.setCurrentItem(images.length * 100 + progress, true);
+                isManualDragging = true;
+
+                //计算实际位置（使用大偏移量确保在循环范围内）
+                int actualPosition = images.length * 100 +progress;
+
+                //使用平滑滚动以获得更好的用户体验
+                viewPager.setCurrentItem(actualPosition, true);
+                
             }
         }
 
@@ -380,31 +393,52 @@ public class ImageCarouselActivity extends AppCompatActivity {
     // 图片轮播适配器
     private class ImageCarouselAdapter extends RecyclerView.Adapter<ImageCarouselAdapter.ImageViewHolder> {
         
+        //重写onCreateViewHolder()方法，创建ImageViewHolder对象
         @Override
         public ImageViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            
+            //创建ImageView对象
             ImageView imageView = new ImageView(ImageCarouselActivity.this);
+            
+            //设置图片缩放类型为CENTER_CROP，保持图片比例并填满整个ImageView
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+
+            //设置ImageView的布局参数,使其填满父容器
             imageView.setLayoutParams(new ViewGroup.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.MATCH_PARENT));
+                    ViewGroup.LayoutParams.MATCH_PARENT,    //宽度填满父容器
+                    ViewGroup.LayoutParams.MATCH_PARENT));  //高度填满父容器
+
+
+            //创建并返回ImageViewHolder对象
             return new ImageViewHolder(imageView);
         }
         
+        //重写onBindViewHolder()方法，绑定数据到ViewHolder
         @Override
         public void onBindViewHolder(ImageViewHolder holder, int position) {
             // 使用模运算确保位置在有效范围内
             int actualPosition = position % images.length;
+
+            //为ImageView设置图片资源
             ((ImageView) holder.itemView).setImageResource(images[actualPosition]);
         }
+
         
+        //重写getItemCount()方法，返回图片数量
         @Override
         public int getItemCount() {
             // 返回一个大的数字以支持无限循环滚动
             return Integer.MAX_VALUE;
         }
         
+
+        //定义ImageViewHolder类，继承自RecyclerView.ViewHolder
         class ImageViewHolder extends RecyclerView.ViewHolder {
+
+            //构造方法，初始化ViewHolder对象
             public ImageViewHolder(View itemView) {
+
+                //调用父类构造方法，将itemView对象传递给父类
                 super(itemView);
             }
         }

@@ -42,7 +42,7 @@
         android:translationZ="15dp"
         >
 
-        <EditText
+        <AutoCompleteTextView
             android:id="@+id/etUsername"
             android:layout_width="match_parent"
             android:layout_height="60dp"
@@ -51,6 +51,8 @@
             android:padding="12dp"
             android:drawableLeft="@drawable/picture"
          />
+
+        
 
         <EditText
             android:id="@+id/etPassword"
