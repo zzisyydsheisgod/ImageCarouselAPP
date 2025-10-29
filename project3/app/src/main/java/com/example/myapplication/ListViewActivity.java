@@ -26,7 +26,9 @@ public class ListViewActivity extends AppCompatActivity {
 
         //组织数据
         String[] UserName_List = {
-
+            "tony","tommy","toyo",
+                "t123","to1234","tong12","tong1","zhongyiyaoshabi",
+                "jiaojianzu","zhangzhi","jiaojianzushishabi"
         };
 
 
